@@ -1,0 +1,30 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $DOCKER_DATA/radarr/config:/config
+      - $DOCKER_MEDIA/movies:/media/movies
+      - $DOCKER_MEDIA/kidsmovies:/media/kidsmovies
+      - $DOCKER_DOWNLOAD/qbittorrent:/download/qbittorrent
+      - $DOCKER_DOWNLOAD/sabnzbd:/download/sabnzbd
+    networks:
+      - homelab
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Radarr
+      homepage.icon: radarr.png
+      homepage.href: https://radarr.aererus.nl/
+      homepage.description: Movie Automation Tool
+      homepage.weight: 1
+      homepage.widget.type: radarr
+      homepage.widget.url: http://radarr:7878
+      homepage.widget.key: ${API_KEY}
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

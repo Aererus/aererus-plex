@@ -1,0 +1,48 @@
+services:  
+  tinyauth:
+    image: ghcr.io/steveiliop56/tinyauth:v4
+    container_name: tinyauth
+    restart: unless-stopped
+    environment:
+      - SECRET=${TINYAUTH_SECRET}
+      - APP_URL=https://tinyauth.aererus.nl
+      - APP_TITLE=Casa Maud & Jeroen
+      - OAUTH_AUTO_REDIRECT=pocketid
+      - PROVIDERS_POCKETID_CLIENT_ID=${TINYAUTH_OIDC_ID}
+      - PROVIDERS_POCKETID_CLIENT_SECRET=${TINYAUTH_OIDC_SECRET}
+      - PROVIDERS_POCKETID_AUTH_URL=https://pocket-id.aererus.nl/authorize
+      - PROVIDERS_POCKETID_TOKEN_URL=https://pocket-id.aererus.nl/api/oidc/token
+      - PROVIDERS_POCKETID_USER_INFO_URL=https://pocket-id.aererus.nl/api/oidc/userinfo
+      - PROVIDERS_POCKETID_REDIRECT_URL=https://tinyauth.aererus.nl/api/oauth/callback/pocketid
+      - PROVIDERS_POCKETID_SCOPES=openid email profile groups
+      - PROVIDERS_POCKETID_NAME=Pocket ID
+    networks:
+      - homelab
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      tinyauth.apps.vpn.oauth.groups: admin
+      tinyauth.apps.homepage.oauth.groups: admin
+      tinyauth.apps.tautulli.oauth.groups: admin
+      tinyauth.apps.bazarr.oauth.groups: admin
+      tinyauth.apps.bazarr4k.oauth.groups: admin
+      tinyauth.apps.chaptarr.oauth.groups: admin
+      tinyauth.apps.fileflows.oauth.groups: admin
+      tinyauth.apps.lidarr.oauth.groups: admin
+      tinyauth.apps.maintainerr.oauth.groups: admin
+      tinyauth.apps.prowlarr.oauth.groups: admin
+      tinyauth.apps.radarr.oauth.groups: admin
+      tinyauth.apps.radarr4k.oauth.groups: admin
+      tinyauth.apps.requestrr.oauth.groups: admin
+      tinyauth.apps.sonarr.oauth.groups: admin
+      tinyauth.apps.sonarr4k.oauth.groups: admin
+      tinyauth.apps.sonarranime.oauth.groups: admin
+      tinyauth.apps.qbittorrent.oauth.groups: admin
+      tinyauth.apps.sabnzbd.oauth.groups: admin
+      tinyauth.apps.slskd.oauth.groups: admin
+      tinyauth.apps.audiobookshelf.oauth.groups: admin
+      tinyauth.apps.owncast.oauth.groups: owncast
+      tinyauth.apps.wiki.oauth.groups: wikipedia
+networks:
+  homelab:
+    external: true

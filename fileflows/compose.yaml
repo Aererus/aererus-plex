@@ -1,0 +1,23 @@
+services:
+  fileflows:
+    image: revenz/fileflows
+    restart: unless-stopped
+    container_name: fileflows
+    networks:
+      - homelab
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      - TZ=Europe/Amsterdam
+      - PUID=1000
+      - PGID=44
+    volumes:
+      - $DOCKER_DATA/fileflows/temp:/temp
+      - $DOCKER_DATA/fileflows/data:/app/Data
+      - $DOCKER_DATA/fileflows/logs:/app/Logs
+      - $DOCKER_DATA/fileflows/common:/app/common
+      - $DOCKER_DATA/fileflows/ffmpeg:/app/ffmpeg
+      - $DOCKER_MEDIA:/media
+networks:
+  homelab:
+    external: true

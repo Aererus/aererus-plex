@@ -1,0 +1,23 @@
+services:
+  wizarr:
+    container_name: wizarr
+    image: ghcr.io/wizarrrr/wizarr:latest
+    environment:
+      - APP_URL=https://invite.aererus.nl
+      - TZ=Europe/Amsterdam
+      - DISABLE_BUILTIN_AUTH=True
+    networks:
+      - homelab
+    volumes:
+      - $DOCKER_DATA/wizarr/config:/data/database
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Wizarr
+      homepage.icon: wizarr.png
+      homepage.href: https://invite.aererus.nl/
+      homepage.description: Invite Tool
+      homepage.weight: 4
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

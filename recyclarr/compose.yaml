@@ -1,0 +1,21 @@
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    user: 1000:1000
+    networks:
+      - homelab
+    volumes:
+      - $DOCKER_DATA/recyclarr/config:/config
+    environment:
+      TZ: Europe/Amsterdam
+    restart: unless-stopped
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Recyclarr
+      homepage.icon: https://raw.githubusercontent.com/recyclarr/recyclarr/master/ci/notify/trash-icon.png
+      homepage.description: Quality Profile Tool
+      homepage.weight: 9
+networks:
+  homelab:
+    external: true

@@ -1,0 +1,18 @@
+services:
+    maintainerr:
+        image: ghcr.io/jorenn92/maintainerr:latest
+        container_name: maintainerr
+        networks:
+          - homelab
+        user: 1000:1000
+        volumes:
+          - type: bind
+            source: $DOCKER_DATA/maintainerr/data
+            target: /opt/data
+        environment:
+          - TZ=Europe/Amsterdam
+        restart: unless-stopped
+
+networks:
+  homelab:
+    external: true

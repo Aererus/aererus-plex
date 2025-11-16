@@ -1,0 +1,30 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $DOCKER_DATA/sonarr/config:/config
+      - $DOCKER_MEDIA/series:/media/series
+      - $DOCKER_MEDIA/kidsseries:/media/kidsseries
+      - $DOCKER_DOWNLOAD/qbittorrent:/download/qbittorrent
+      - $DOCKER_DOWNLOAD/sabnzbd:/download/sabnzbd
+    networks:
+      - homelab
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Sonarr
+      homepage.icon: sonarr.png
+      homepage.href: https://sonarr.aererus.nl/
+      homepage.description: Series Automation Tool
+      homepage.weight: 2
+      homepage.widget.type: sonarr
+      homepage.widget.url: http://sonarr:8989
+      homepage.widget.key: ${API_KEY}
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

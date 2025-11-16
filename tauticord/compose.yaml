@@ -1,0 +1,14 @@
+services:
+  tauticord:
+    image: nwithan8/tauticord:latest
+    container_name: tauticord
+    networks:
+      - homelab
+    volumes:
+      - $DOCKER_DATA/tauticord/config:/config
+      - $DOCKER_DATA/tauticord/logs:/logs
+      - $DOCKER_MEDIA:/monitor
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

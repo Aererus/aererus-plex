@@ -1,0 +1,50 @@
+services:
+  caddy:
+    image: serfriz/caddy-cloudflare-ddns-crowdsec-geoip-security:latest
+    #image: ghcr.io/caddybuilds/caddy-cloudflare:latest
+    container_name: caddy
+    restart: unless-stopped
+    networks:
+      - homelab
+    ports:
+      - 192.168.1.50:443:443
+      - 192.168.1.50:80:80
+    environment:
+      - CLOUDFLARE_API_TOKEN=${ENV_CF_API_TOKEN}
+      - CROWDSEC_API_KEY=${ENV_CROWDSEC_API_KEY}
+      - TAUTULLI_HEADER_KEY=${TAUTULLI_HEADER_KEY}
+    volumes:
+      - $DOCKER_DATA/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - $DOCKER_DATA/caddy/data:/data
+      - $DOCKER_DATA/caddy/config:/config
+      - $DOCKER_DATA/caddy/logs:/var/log/caddy
+#    command: ["caddy", "run", "--watch", "--config", "/etc/caddy/Caddyfile"]
+    labels:
+      - homepage.group=Network
+      - homepage.name=Caddy
+      - homepage.icon=caddy.png
+      - homepage.description=Reverse Proxy
+      - homepage.weight=4
+    depends_on:
+      - crowdsec
+    security_opt:
+      - no-new-privileges=true
+
+  crowdsec:
+    image: crowdsecurity/crowdsec:latest
+    container_name: crowdsec
+    restart: unless-stopped
+    environment:
+      COLLECTIONS: "crowdsecurity/caddy"
+    volumes:
+      - $DOCKER_DATA/crowdsec/config:/etc/crowdsec
+      - $DOCKER_DATA/crowdsec/data:/var/lib/crowdsec/data
+      - $DOCKER_DATA/caddy/logs:/var/log/caddy
+    networks:
+      - homelab
+    security_opt:
+      - no-new-privileges=true
+
+networks:
+  homelab:
+    external: true

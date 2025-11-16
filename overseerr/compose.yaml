@@ -1,0 +1,27 @@
+services:
+  overseerr:
+    #image: lscr.io/linuxserver/overseerr:latest
+    image: ghcr.io/engels74/overseerr-anime
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Amsterdam
+    volumes:
+      - $DOCKER_DATA/overseerr/config:/config
+    networks:
+      - homelab
+    labels:
+      homepage.group: Media
+      homepage.name: Overseerr
+      homepage.icon: overseerr.png
+      homepage.href: https://overseerr.aererus.nl/
+      homepage.description: Media Requests
+      homepage.weight: 2
+      homepage.widget.type: overseerr
+      homepage.widget.url: http://overseerr:5055
+      homepage.widget.key: ${API_KEY}
+    restart: unless-stopped   
+networks:
+  homelab:
+    external: true

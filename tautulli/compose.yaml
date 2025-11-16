@@ -1,0 +1,29 @@
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $DOCKER_DATA/tautulli/config:/config
+    ports:
+      - 127.0.0.1:8181:8181
+    networks:
+      - homelab
+    labels:
+      homepage.group: Tautulli
+      homepage.name: Tautulli
+      homepage.icon: tautulli.png
+      homepage.href: https://tautulli.aererus.nl/
+      homepage.description: Plex Monitoring
+      homepage.widget.type: tautulli
+      homepage.widget.url: http://tautulli:8181
+      homepage.widget.key: ${API_KEY}
+      homepage.widget.enableUser: true
+      homepage.widget.showEpisodeNumber: true
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

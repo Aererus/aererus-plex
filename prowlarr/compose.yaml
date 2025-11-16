@@ -1,0 +1,25 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $DOCKER_DATA/prowlarr/config:/config
+    networks:
+      - homelab
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Prowlarr
+      homepage.icon: prowlarr.png
+      homepage.href: https://prowlarr.thuis.jeroenwijnstra.nl/admin
+      homepage.description: Indexer Management Tool
+      homepage.widget.type: prowlarr
+      homepage.widget.url: http://prowlarr:9696
+      homepage.widget.key: ${API_KEY}
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

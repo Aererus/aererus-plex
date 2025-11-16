@@ -1,0 +1,20 @@
+services:
+  requestrr:
+    image: thomst08/requestrr
+    hostname: requestrr
+    container_name: requestrr
+    networks:
+      - homelab
+    volumes:
+      - $DOCKER_DATA/requestrr/config:/root/config
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Requestrr
+      homepage.icon: requestrr.png
+      homepage.href: https://requestrr.thuis.jeroenwijnstra.nl/
+      homepage.description: Discord Request Bot
+      homepage.weight: 5
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true

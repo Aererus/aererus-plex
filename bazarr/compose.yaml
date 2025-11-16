@@ -1,0 +1,28 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - $DOCKER_DATA/bazarr/config:/config
+      - $DOCKER_MEDIA/movies:/media/movies
+      - $DOCKER_MEDIA/series:/media/series
+    networks:
+      - homelab
+    labels:
+      homepage.group: Arr* Stack
+      homepage.name: Bazarr
+      homepage.icon: bazarr.png
+      homepage.href: https://bazarr.aererus.nl/
+      homepage.description: Subtitle Automation Tool
+      homepage.weight: 3
+      homepage.widget.type: bazarr
+      homepage.widget.url: http://bazarr:6767
+      homepage.widget.key: ${API_KEY}
+    restart: unless-stopped
+networks:
+  homelab:
+    external: true
